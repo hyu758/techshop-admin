@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind Admin Template</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+        .font-family-karla { font-family: karla; }
+        .bg-sidebar { background: #3d68ff; }
+        .cta-btn { color: #3d68ff; }
+        .upgrade-btn { background: #1947ee; }
+        .upgrade-btn:hover { background: #0038fd; }
+        .active-nav-link { background: #1947ee; }
+        .nav-item:hover { background: #1947ee; }
+        .account-link:hover { background: #3d68ff; }
+    </style>
+</head>
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href="index.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Blank Page
+            </a>
+            <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Tables
+            </a>
+            <a href="forms.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Forms
+            </a>
+            <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Tabbed Content
+            </a>
+            <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+        </nav>
+        <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-up mr-3"></i>
+            Upgrade to Pro!
+        </a>
+    </aside>
+
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+        <!-- Desktop Header -->
+        <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+            <div class="w-1/2"></div>
+            <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+                <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                </button>
+                <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
+                <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header & Nav -->
+        <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                    <i x-show="!isOpen" class="fas fa-bars"></i>
+                    <i x-show="isOpen" class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Nav -->
+            <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <a href="index.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Blank Page
+                </a>
+                <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-table mr-3"></i>
+                    Tables
+                </a>
+                <a href="forms.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-align-left mr-3"></i>
+                    Forms
+                </a>
+                <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    Tabbed Content
+                </a>
+                <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendar
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-cogs mr-3"></i>
+                    Support
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-user mr-3"></i>
+                    My Account
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Sign Out
+                </a>
+            </nav>
+            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button> -->
+        </header>
+    
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="w-full text-3xl text-black pb-6">Forms</h1>
+
+                <div class="flex flex-wrap justify-center">
+                    <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                        <p class="text-xl pb-6 flex items-center">
+                            <i class="fas fa-list mr-3"></i> Add Product
+                        </p>
+                        <div class="leading-loose">
+                            <form class="p-10 bg-white rounded shadow-xl add-product-form">
+                                <!-- Name -->
+                                <div>
+                                    <label class="block text-sm text-gray-600" for="name">Name</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name" name="name" type="text" required placeholder="Product Name" aria-label="Name">
+                                </div>
+                                <!-- Description -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="description">Description</label>
+                                    <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded" id="description" name="description" rows="4" required placeholder="Product Description" aria-label="Description"></textarea>
+                                </div>
+                                <!-- Price -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="price">Price</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="price" name="price" type="number" step = "any" required placeholder="Product Price" aria-label="Price">
+                                </div>
+                                <!-- Stock Quantity -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="stock_quantity">Stock Quantity</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="stock_quantity" name="stock_quantity" type="number" required placeholder="Stock Quantity" aria-label="Stock Quantity">
+                                </div>
+                                <!-- Category ID -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="category_id">Category ID</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="category_id" name="category_id" type="number" required placeholder="Category ID" aria-label="Category ID">
+                                </div>
+                                <!-- Image URL -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="image_url">Image URL</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="image_url" name="image_url" type="text" required placeholder="Image URL" aria-label="Image URL">
+                                </div>
+                                <!-- Brand -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="brand">Brand</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="brand" name="brand" type="text" required placeholder="Brand" aria-label="Brand">
+                                </div>
+                                <!-- Submit Button -->
+                                <div class="mt-6">
+                                    <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </main>
+    
+            <footer class="w-full bg-white text-right p-4">
+                Built by <a target="_blank" href="https://github.com/hyu758" class="underline">Tao</a>.
+            </footer>
+        </div>
+        
+    </div>
+
+    <!-- AlpineJS -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.add-product-form');
+        
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Ngăn chặn form gửi mặc định
+            
+            // Lấy dữ liệu từ form
+            const name = document.getElementById('name').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const price = parseFloat(document.getElementById('price').value.trim());
+            const stock_quantity = parseInt(document.getElementById('stock_quantity').value.trim(), 10);
+            const category_id = parseInt(document.getElementById('category_id').value.trim(), 10);
+            const image_url = document.getElementById('image_url').value.trim();
+            const brand = document.getElementById('brand').value.trim();
+
+            // Kiểm tra tính hợp lệ của giá
+            const pricePattern = /^\d+(\.\d{1,2})?$/;
+            if (!pricePattern.test(price)) {
+                alert('Vui lòng nhập số tiền hợp lệ!');
+                return;
+            }
+
+            // Tạo đối tượng dữ liệu để gửi
+            const productData = {
+                name: name,
+                description: description,
+                price: parseFloat(price),
+                stock_quantity: parseInt(stock_quantity, 10),
+                category_id: parseInt(category_id, 10),
+                image_url: image_url,
+                brand: brand,
+            };
+            try {
+                // Gửi dữ liệu đến API
+                const response = await fetch('http://localhost:3000/api/createProduct', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
+                console.log(productData);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Xử lý phản hồi từ API
+                const result = await response.json();
+                alert('Thêm sản phẩm thành công!');
+                form.reset(); // Đặt lại form sau khi thành công
+
+            } catch (error) {
+                console.error('Error adding product:', error);
+                alert('Có lỗi khi thêm dữ liệu. Vui lòng thử lại');
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>

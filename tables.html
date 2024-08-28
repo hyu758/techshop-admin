@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind Admin Template</title>
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #3d68ff;
+        }
+
+        .cta-btn {
+            color: #3d68ff;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+        .upgrade-btn:hover {
+            background: #0038fd;
+        }
+
+        .active-nav-link {
+            background: #1947ee;
+        }
+
+        .nav-item:hover {
+            background: #1947ee;
+        }
+
+        .account-link:hover {
+            background: #3d68ff;
+        }
+
+        /* Popup Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .modal-show {
+            display: flex !important;
+        }
+
+    </style>
+</head>
+
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <button
+                class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href="index.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-sticky-note mr-3"></i>
+                Blank Page
+            </a>
+            <a href="tables.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Tables
+            </a>
+            <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Forms
+            </a>
+            <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                Tabbed Content
+            </a>
+            <a href="calendar.html"
+                class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-calendar mr-3"></i>
+                Calendar
+            </a>
+        </nav>
+        <a href="#"
+            class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+            <i class="fas fa-arrow-circle-up mr-3"></i>
+            Upgrade to Pro!
+        </a>
+    </aside>
+
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+        <!-- Desktop Header -->
+        <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+            <div class="w-1/2"></div>
+            <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+                <button @click="isOpen = !isOpen"
+                    class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                </button>
+                <button x-show="isOpen" @click="isOpen = false"
+                    class="h-full w-full fixed inset-0 cursor-default"></button>
+                <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header & Nav -->
+        <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                    <i x-show="!isOpen" class="fas fa-bars"></i>
+                    <i x-show="isOpen" class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Nav -->
+            <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <a href="index.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="blank.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Blank Page
+                </a>
+                <a href="tables.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-table mr-3"></i>
+                    Tables
+                </a>
+                <a href="./form.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-align-left mr-3"></i>
+                    Forms
+                </a>
+                <a href="tabs.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    Tabbed Content
+                </a>
+                <a href="calendar.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendar
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-cogs mr-3"></i>
+                    Support
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-user mr-3"></i>
+                    My Account
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Sign Out
+                </a>
+            </nav>
+            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button> -->
+        </header>
+
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Tables</h1>
+
+                <div class="w-full mt-6">
+                    <p class="text-xl pb-3 flex items-center">
+                        <i class="fas fa-list mr-3"></i> User
+                    </p>
+                    <div class="bg-white overflow-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-800 text-white">
+                                <tr>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">ID</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Name</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Email</td>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Password</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Address</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Phone number</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Created at</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Updated at</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700" id="table-users">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div class="w-full mt-6">
+                    <p class="text-xl pb-3 flex items-center">
+                        <i class="fas fa-list mr-3"></i> Product
+                    </p>
+                    <div class="bg-white overflow-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-800 text-white">
+                                <tr>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">ID</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Name</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Price</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Stock Quantity</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Category</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Brand</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Image URL</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Updated at</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-products" class="text-gray-700">
+                                <!-- Rows will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="w-full bg-white text-right p-4">
+                Built by <a target="_blank" href="https://github.com/hyu758" class="underline">Tao</a>.
+            </footer>
+        </div>
+
+    </div>
+    <div id="edit-modal" class="fixed inset-0 z-50 items-center justify-center bg-gray-900 bg-opacity-50 modal">
+        <div class="bg-white p-10 rounded shadow-xl w-1/2">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-700">Edit Product</h2>
+                <button id="close-modal" class="text-gray-600 hover:text-gray-800" aria-label="Close modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Edit Product Form -->
+            <form id="edit-form">
+                <!-- Name -->
+                 <div>
+                    <label class="block text-sm text-gray-600" for="non_edit_id">ID</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="readonly-input" name="id" type="text" readonly aria-label="ID">
+                 </div>
+                <div>
+                    <label class="block text-sm text-gray-600" for="edit_name">Name</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_name" name="name" type="text" required placeholder="Product Name" aria-label="Name">
+                </div>
+                <!-- Description -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_description">Description</label>
+                    <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded" id="edit_description" name="description" rows="4" required placeholder="Product Description" aria-label="Description"></textarea>
+                </div>
+                <!-- Price -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_price">Price</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_price" name="price" type="number" step="any" required placeholder="Product Price" aria-label="Price">
+                </div>
+                <!-- Stock Quantity -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_stock_quantity">Stock Quantity</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_stock_quantity" name="stock_quantity" type="number" required placeholder="Stock Quantity" aria-label="Stock Quantity">
+                </div>
+                <!-- Category ID -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_category_id">Category ID</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_category_id" name="category_id" type="number" required placeholder="Category ID" aria-label="Category ID">
+                </div>
+                <!-- Image URL -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_image_url">Image URL</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_image_url" name="image_url" type="text" required placeholder="Image URL" aria-label="Image URL">
+                </div>
+                <!-- Brand -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_brand">Brand</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_brand" name="brand" type="text" required placeholder="Brand" aria-label="Brand">
+                </div>
+                <!-- Submit Button -->
+                <div class="mt-6">
+                    <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AlpineJS -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+        integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://localhost:3000/api/getUsers')  // Thay bằng API của bạn
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('table-users');
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td class="px-2 py-2 border-b">${item.id}</td>
+                    <td class="px-2 py-2 border-b">${item.name}</td>
+                    <td class="px-2 py-2 border-b">${item.email}</td>
+                    <td class="px-2 py-2 border-b">${item.password}</td>
+                    <td class="px-2 py-2 border-b">${item.address}</td>
+                    <td class="px-2 py-2 border-b">${item.phone_number}</td>
+                    <td class="px-2 py-2 border-b">${new Date(item.created_at).toLocaleString()}</td>
+                    <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+
+                fetch('http://localhost:3000/api/getAllProducts')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('table-products');
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="px-2 py-2 border-b">${item.id}</td>
+                            <td class="px-2 py-2 border-b">${item.name}</td>
+                            <td class="px-2 py-2 border-b">${item.price}</td>
+                            <td class="px-2 py-2 border-b">${item.stock_quantity}</td>
+                            <td class="px-2 py-2 border-b">${item.category_id}</td>
+                            <td class="px-2 py-2 border-b">${item.brand}</td>
+                            <td class="px-2 py-2 border-b">${item.image_url}</td>
+                            <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
+                            <td class="px-2 py-2 border-b">
+                                <button onclick="openModal(${item.id})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+
+
+        // function updateProduct(id) {
+        //     const form = document.getElementById('product-form');
+        //     const data = new FormData(form);
+        //     const productData = {};
+
+        //     data.forEach((value, key) => {
+        //         const [field, productId] = key.split('-');
+        //         if (productId == id) {
+        //             productData[field] = value;
+        //         }
+        //     });
+        //     console.log(productData);
+        //     fetch(`http://localhost:3000/api/updateProduct/${id}`, {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(productData),
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             alert('Product updated successfully');
+        //         })
+        //         .catch(error => console.error('Error updating product:', error));
+        // }
+        function openModal(productId) {
+            // Fetch product data and populate the form
+            fetch(`http://localhost:3000/api/getProductDetails/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('readonly-input').value = productId;
+                    document.getElementById('edit_name').value = data.name;
+                    document.getElementById('edit_price').value = data.price;
+                    document.getElementById('edit_description').value = data.description;
+                    document.getElementById('edit_stock_quantity').value = data.stock_quantity;
+                    document.getElementById('edit_category_id').value = data.category_id;
+                    document.getElementById('edit_brand').value = data.brand;
+                    document.getElementById('edit_image_url').value = data.image_url;
+
+                    // Show the modal
+                    console.log('ALooooo')
+                    document.getElementById('edit-modal').classList.add('modal-show');
+                })
+                .catch(error => console.error('Error fetching product data:', error));
+        }
+
+        document.getElementById('close-modal').addEventListener('click', function () {
+            document.getElementById('edit-modal').classList.remove('modal-show');
+        });
+
+        document.getElementById('edit-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const productData = {};
+
+            formData.forEach((value, key) => {
+                productData[key] = value;
+            });
+            console.log(productData.id);
+            fetch(`http://localhost:3000/api/updateProduct/${productData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(productData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Product updated successfully');
+                })
+                .catch(error => console.error('Error updating product:', error));
+        });
+    </script>
+</body>
+
+</html>
