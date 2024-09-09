@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind Admin Template</title>
+  <meta name="author" content="Tao">
+  <meta name="description" content="">
+
+  <!-- Nucleo Icons -->
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+
+  <!-- Nepcha Analytics (nepcha.com) -->
+  <!-- Nepcha is an easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA, and PECR. -->
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+    .font-family-karla {
+      font-family: karla;
+    }
+
+    .bg-sidebar {
+      background: #3d68ff;
+    }
+
+    .cta-btn {
+      color: #3d68ff;
+    }
+
+    .upgrade-btn {
+      background: #1947ee;
+    }
+
+    .upgrade-btn:hover {
+      background: #0038fd;
+    }
+
+    .active-nav-link {
+      background: #1947ee;
+    }
+
+    .nav-item:hover {
+      background: #1947ee;
+    }
+
+    .account-link:hover {
+      background: #3d68ff;
+    }
+  </style>
+</head>
+
+
+<body class="bg-gray-100 font-family-karla flex">
+  <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+    <div class="p-6">
+      <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+      <button
+        class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+        <i class="fas fa-plus mr-3"></i> New Report
+      </button>
+    </div>
+    <nav class="text-white text-base font-semibold pt-3">
+      <a href="dashboard.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+        <i class="fas fa-tachometer-alt mr-3"></i>
+        Dashboard
+      </a>
+      <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-table mr-3"></i>
+        Tables
+      </a>
+      <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-align-left mr-3"></i>
+        Forms
+      </a>
+      <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <i class="fas fa-calendar mr-3"></i>
+        Calendar
+      </a>
+    </nav>
+    <a href="#"
+      class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+      <i class="fas fa-arrow-circle-up mr-3"></i>
+      Upgrade to Pro!
+    </a>
+  </aside>
+
+  <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+    
+    <!-- Desktop Header -->
+    <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+      <div class="w-1/2"></div>
+      <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+        <button @click="isOpen = !isOpen"
+          class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+          <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+        </button>
+        <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
+        <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+          <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
+          <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+          <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Header & Nav -->
+    <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+        <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+          <i x-show="!isOpen" class="fas fa-bars"></i>
+          <i x-show="isOpen" class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Dropdown Nav -->
+      <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+        <a href="dashboard.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+          <i class="fas fa-tachometer-alt mr-3"></i>
+          Dashboard
+        </a>
+        <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-table mr-3"></i>
+          Tables
+        </a>
+        <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-align-left mr-3"></i>
+          Forms
+        </a>
+        <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-calendar mr-3"></i>
+          Calendar
+        </a>
+        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-cogs mr-3"></i>
+          Support
+        </a>
+        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-user mr-3"></i>
+          My Account
+        </a>
+        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+          <i class="fas fa-sign-out-alt mr-3"></i>
+          Sign Out
+        </a>
+      </nav>
+      <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+            <i class="fas fa-plus mr-3"></i> New Report
+        </button> -->
+    </header>
+
+    <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+      <main class="w-full flex-grow p-6">
+        <div class="container mx-auto py-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm mb-0 text-gray-600 font-semibold">Today's Money</p>
+                  <h5 class="text-lg font-bold">
+                    $53,000
+                    <span class="text-green-600 text-sm font-semibold">+55%</span>
+                  </h5>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full shadow-md">
+                  <i class="ni ni-money-coins text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm mb-0 text-gray-600 font-semibold">Today's Users</p>
+                  <h5 class="text-lg font-bold">
+                    2,300
+                    <span class="text-green-600 text-sm font-semibold">+3%</span>
+                  </h5>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full shadow-md">
+                  <i class="ni ni-world text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm mb-0 text-gray-600 font-semibold">New Clients</p>
+                  <h5 class="text-lg font-bold">
+                    +3,462
+                    <span class="text-red-600 text-sm font-semibold">-2%</span>
+                  </h5>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full shadow-md">
+                  <i class="ni ni-paper-diploma text-xl"></i>
+                </div>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm mb-0 text-gray-600 font-semibold">Sales</p>
+                  <h5 class="text-lg font-bold">
+                    $103,430
+                    <span class="text-green-600 text-sm font-semibold">+5%</span>
+                  </h5>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full shadow-md">
+                  <i class="ni ni-cart text-xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+            <!-- Active Users Chart -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="bg-blue-500 rounded-t-lg py-3 px-4 mb-3">
+                <canvas id="chart-bars" class="w-full h-40"></canvas>
+              </div>
+              <h6 class="text-lg font-semibold">Active Users</h6>
+              <p class="text-sm text-gray-600">(<span class="font-semibold">+23%</span>) than last week</p>
+              <div class="mt-4 flex flex-wrap gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-2">
+                      <!-- SVG icon -->
+                    </div>
+                    <div class="flex-1">
+                      <p class="text-xs text-gray-600 font-semibold">Users</p>
+                      <h4 class="font-bold">36K</h4>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-800 h-2.5 rounded-full w-3/5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center mr-2">
+                      <!-- SVG icon -->
+                    </div>
+                    <div class="flex-1">
+                      <p class="text-xs text-gray-600 font-semibold">Clicks</p>
+                      <h4 class="font-bold">2m</h4>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-800 h-2.5 rounded-full w-9/10"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center mr-2">
+                      <!-- SVG icon -->
+                    </div>
+                    <div class="flex-1">
+                      <p class="text-xs text-gray-600 font-semibold">Sales</p>
+                      <h4 class="font-bold">435$</h4>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-800 h-2.5 rounded-full w-3/10"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center mr-2">
+                      <!-- SVG icon -->
+                    </div>
+                    <div class="flex-1">
+                      <p class="text-xs text-gray-600 font-semibold">Items</p>
+                      <h4 class="font-bold">43</h4>
+                      <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-800 h-2.5 rounded-full w-1/2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Sales Overview -->
+            <div class="bg-white shadow-lg rounded-lg p-4">
+              <div class="border-b pb-4">
+                <h6 class="text-lg font-semibold">Sales overview</h6>
+                <p class="text-sm text-gray-600">
+                  <i class="fa fa-arrow-up text-green-600"></i>
+                  <span class="font-semibold">4% more</span> in 2021
+                </p>
+              </div>
+              <div class="pt-4">
+                <canvas id="chart-line" class="w-full h-72"></canvas>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </main>
+      <footer class="w-full bg-white text-right p-4">
+        Built by <a target="_blank" href="https://github.com/hyu758" class="underline">Tao</a>.
+      </footer>
+    </div>
+  </div>
+
+  <!-- AlpineJS -->
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+    integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+
+
+  <!--   Core JS Files   -->
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="assets/js/plugins/chartjs.min.js"></script>
+  <script>
+    var ctx = document.getElementById("chart-bars").getContext("2d");
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Sales",
+          tension: 0.4,
+          borderWidth: 0,
+          borderRadius: 4,
+          borderSkipped: false,
+          backgroundColor: "#fff",
+          data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
+          maxBarThickness: 6
+        },],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+            },
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 500,
+              beginAtZero: true,
+              padding: 15,
+              font: {
+                size: 14,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+              color: "#fff"
+            },
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false
+            },
+            ticks: {
+              display: false
+            },
+          },
+        },
+      },
+    });
+
+
+    var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+
+    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+    new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#cb0c9f",
+          borderWidth: 3,
+          backgroundColor: gradientStroke1,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        },
+        {
+          label: "Websites",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#3A416F",
+          borderWidth: 3,
+          backgroundColor: gradientStroke2,
+          fill: true,
+          data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+          maxBarThickness: 6
+        },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#b2b9bf',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#b2b9bf',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+</body>
+
+</html>
