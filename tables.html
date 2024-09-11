@@ -223,6 +223,7 @@
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">ID</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Name</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Price</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Discount</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Sold Quantity</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Stock Quantity</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Category</th>
@@ -283,6 +284,12 @@
                     <label class="block text-sm text-gray-600" for="edit_price">Price</label>
                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_price" name="price"
                         type="number" step="any" required placeholder="Product Price" aria-label="Price">
+                </div>
+                <!-- Discount -->
+                <div class="mt-2">
+                    <label class="block text-sm text-gray-600" for="edit_discount">Discount</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_discount" name="discount"
+                        type="number" step="any" required placeholder="Product Discount" aria-label="Discount">
                 </div>
                 <!-- Sold Quantity -->
                 <div class="mt-2">
@@ -364,6 +371,7 @@
                             <td class="px-2 py-2 border-b">${item.id}</td>
                             <td class="px-2 py-2 border-b truncate">${item.name}</td>
                             <td class="px-2 py-2 border-b">${item.price}</td>
+                            <td class="px-2 py-2 border-b">${item.discount}</td>
                             <td class="px-2 py-2 border-b">${item.sold_quantity}</td>
                             <td class="px-2 py-2 border-b">${item.stock_quantity}</td>
                             <td class="px-2 py-2 border-b">${item.category_id}</td>
@@ -387,6 +395,7 @@
                     document.getElementById('readonly-input').value = productId;
                     document.getElementById('edit_name').value = data.name;
                     document.getElementById('edit_price').value = data.price;
+                    document.getElementById('edit_discount').value = data.discount;
                     document.getElementById('edit_description').value = data.description;
                     document.getElementById('edit_sold_quantity').value = data.sold_quantity;
                     document.getElementById('edit_stock_quantity').value = data.stock_quantity;
