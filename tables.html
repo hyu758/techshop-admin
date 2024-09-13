@@ -31,14 +31,6 @@
             color: #3d68ff;
         }
 
-        .upgrade-btn {
-            background: #1947ee;
-        }
-
-        .upgrade-btn:hover {
-            background: #0038fd;
-        }
-
         .active-nav-link {
             background: #1947ee;
         }
@@ -102,17 +94,7 @@
                 <i class="fas fa-align-left mr-3"></i>
                 Forms
             </a>
-            <a href="calendar.html"
-                class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-calendar mr-3"></i>
-                Calendar
-            </a>
         </nav>
-        <a href="#"
-            class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
-            <i class="fas fa-arrow-circle-up mr-3"></i>
-            Upgrade to Pro!
-        </a>
     </aside>
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
@@ -122,13 +104,11 @@
             <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
                 <button @click="isOpen = !isOpen"
                     class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
-                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                    <img src="avatar-default.jpg">
                 </button>
                 <button x-show="isOpen" @click="isOpen = false"
                     class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
                     <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
                 </div>
             </div>
@@ -340,7 +320,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('https://techshop-backend-c7hy.onrender.com/api/getUsers')  // Thay bằng API của bạn
+            fetch('https://techshop-backend-c7hy.onrender.com/api/getUsers') 
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('table-users');

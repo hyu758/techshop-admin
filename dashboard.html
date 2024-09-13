@@ -12,10 +12,6 @@
   <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
 
-  <!-- Nepcha Analytics (nepcha.com) -->
-  <!-- Nepcha is an easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA, and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -32,14 +28,6 @@
 
     .cta-btn {
       color: #3d68ff;
-    }
-
-    .upgrade-btn {
-      background: #1947ee;
-    }
-
-    .upgrade-btn:hover {
-      background: #0038fd;
     }
 
     .active-nav-link {
@@ -79,33 +67,22 @@
         <i class="fas fa-align-left mr-3"></i>
         Forms
       </a>
-      <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-        <i class="fas fa-calendar mr-3"></i>
-        Calendar
-      </a>
     </nav>
-    <a href="#"
-      class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
-      <i class="fas fa-arrow-circle-up mr-3"></i>
-      Upgrade to Pro!
-    </a>
   </aside>
 
   <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
-    
+
     <!-- Desktop Header -->
     <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
       <div class="w-1/2"></div>
       <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
         <button @click="isOpen = !isOpen"
           class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
-          <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+          <img src="avatar-default.jpg">
         </button>
         <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
         <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-          <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
-          <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
-          <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+          <a href="login.html" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
         </div>
       </div>
     </header>
@@ -238,7 +215,7 @@
                     </div>
                     <div class="flex-1">
                       <p class="text-xs text-gray-600 font-semibold">Users</p>
-                      <h4 class="font-bold">36K</h4>
+                      <h4 class="font-bold" id="user-count">0</h4>
                       <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-gray-800 h-2.5 rounded-full w-3/5"></div>
                       </div>
@@ -251,8 +228,8 @@
                       <!-- SVG icon -->
                     </div>
                     <div class="flex-1">
-                      <p class="text-xs text-gray-600 font-semibold">Clicks</p>
-                      <h4 class="font-bold">2m</h4>
+                      <p class="text-xs text-gray-600 font-semibold">Sales</p>
+                      <h4 class="font-bold" id="total-revenue">0</h4>
                       <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-gray-800 h-2.5 rounded-full w-9/10"></div>
                       </div>
@@ -265,10 +242,10 @@
                       <!-- SVG icon -->
                     </div>
                     <div class="flex-1">
-                      <p class="text-xs text-gray-600 font-semibold">Sales</p>
-                      <h4 class="font-bold">435$</h4>
+                      <p class="text-xs text-gray-600 font-semibold">Total Sold Quantity</p>
+                      <h4 class="font-bold" id="total-sold-quantity">0</h4>
                       <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-gray-800 h-2.5 rounded-full w-3/10"></div>
+                        <div class="bg-gray-800 h-2.5 rounded-full w-1/2"></div>
                       </div>
                     </div>
                   </div>
@@ -279,8 +256,8 @@
                       <!-- SVG icon -->
                     </div>
                     <div class="flex-1">
-                      <p class="text-xs text-gray-600 font-semibold">Items</p>
-                      <h4 class="font-bold">43</h4>
+                      <p class="text-xs text-gray-600 font-semibold">Total Stock Quantity</p>
+                      <h4 class="font-bold" id="total-stock-quantity">0</h4>
                       <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-gray-800 h-2.5 rounded-full w-1/2"></div>
                       </div>
@@ -289,7 +266,7 @@
                 </div>
               </div>
             </div>
-          
+
             <!-- Sales Overview -->
             <div class="bg-white shadow-lg rounded-lg p-4">
               <div class="border-b pb-4">
@@ -304,7 +281,7 @@
               </div>
             </div>
           </div>
-          
+
         </div>
       </main>
       <footer class="w-full bg-white text-right p-4">
@@ -326,6 +303,8 @@
   <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="assets/js/plugins/chartjs.min.js"></script>
+
+
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -505,9 +484,57 @@
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-  
+
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('https://techshop-backend-c7hy.onrender.com/api/getUsers')
+            .then(response => response.json())
+            .then(data => {
+                // Tính tổng số người dùng
+                const userCount = data.length;
+
+                // Cập nhật số người dùng vào trang web
+                const userCountElement = document.getElementById('user-count');
+                if (userCountElement) {
+                    userCountElement.textContent = userCount.toLocaleString();
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+      fetch('https://techshop-backend-c7hy.onrender.com/api/getAllProducts')
+        .then(response => response.json())
+        .then(data => {
+          const totalStockQuantity = data.reduce((total, product) => total + product.stock_quantity, 0);
+          const totalSoldQuantity = data.reduce((total, product) => total + product.sold_quantity, 0);
+          const totalRevenue = data.reduce((total, product) => total + (product.price * product.sold_quantity), 0);
+
+          // Cập nhật số lượng sản phẩm vào trang web
+          const productCount = document.getElementById('total-stock-quantity');
+          if (productCount) {
+            productCount.textContent = totalStockQuantity.toLocaleString();
+          }
+
+          // Cập nhật doanh thu vào trang web
+          const revenueElement = document.getElementById('total-revenue');
+          if (revenueElement) {
+            revenueElement.textContent = totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+          }
+
+          // Cập nhật số sản phẩm đã bán vào trang web
+          const soldQuantityElement = document.getElementById('total-sold-quantity');
+          if (soldQuantityElement) {
+            soldQuantityElement.textContent = totalSoldQuantity.toLocaleString();
+          }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    });
+  </script>
+
+
+
 </body>
 
 </html>
