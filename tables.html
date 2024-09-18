@@ -14,11 +14,12 @@
         @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
 
         .truncate {
-            max-width: 200px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+
         .font-family-karla {
             font-family: karla;
         }
@@ -189,9 +190,13 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- Pagination buttons for Users table -->
+                    <div class="flex justify-center items-center space-x-4 mt-4">
+                        <button id="prev-users" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+                        <span id="current-page-users" class="text-lg font-medium text-gray-700">Page 1</span>
+                        <button id="next-users" class="bg-gray-500 text-white px-4 py-2 rounded">Next</button>
+                    </div>
                 </div>
-
-
                 <div class="w-full mt-6">
                     <p class="text-xl pb-3 flex items-center">
                         <i class="fas fa-list mr-3"></i> Product
@@ -204,8 +209,10 @@
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Name</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Price</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Discount</th>
-                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Sold Quantity</th>
-                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Stock Quantity</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Sold Quantity
+                                    </th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Stock Quantity
+                                    </th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Category</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Brand</th>
                                     <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Updated at</th>
@@ -216,6 +223,12 @@
                                 <!-- Rows will be dynamically added here -->
                             </tbody>
                         </table>
+                    </div>
+                    <!-- Pagination buttons for Products table -->
+                    <div class="flex justify-center items-center space-x-4 mt-4">
+                        <button id="prev-products" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+                        <span id="current-page-products" class="text-lg font-medium text-gray-700">Page 1</span>
+                        <button id="next-products" class="bg-gray-500 text-white px-4 py-2 rounded">Next</button>
                     </div>
                 </div>
             </main>
@@ -320,52 +333,119 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('https://techshop-backend-c7hy.onrender.com/api/getUsers') 
+            const itemsPerPage = 10;
+            let currentPageUsers = 1;
+            let currentPageProducts = 1;
+
+            // Fetch users data and implement pagination
+            fetch('https://techshop-backend-c7hy.onrender.com/api/getAllUsers')
                 .then(response => response.json())
                 .then(data => {
-                    const tableBody = document.getElementById('table-users');
-                    data.forEach(item => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                    <td class="px-2 py-2 border-b">${item.id}</td>
-                    <td class="px-2 py-2 border-b">${item.name}</td>
-                    <td class="px-2 py-2 border-b">${item.email}</td>
-                    <td class="px-2 py-2 border-b truncate">${item.password}</td>
-                    <td class="px-2 py-2 border-b truncate">${item.address}</td>
-                    <td class="px-2 py-2 border-b">${item.phone_number}</td>
-                    <td class="px-2 py-2 border-b">${new Date(item.created_at).toLocaleString()}</td>
-                    <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
-                `;
-                        tableBody.appendChild(row);
+                    const totalPagesUsers = Math.ceil(data.length / itemsPerPage);
+                    renderUsersTable(data, currentPageUsers);
+
+                    document.getElementById('prev-users').addEventListener('click', function () {
+                        if (currentPageUsers > 1) {
+                            currentPageUsers--;
+                            renderUsersTable(data, currentPageUsers);
+                            updateCurrentPage('users', currentPageUsers);
+                        }
+                    });
+
+                    document.getElementById('next-users').addEventListener('click', function () {
+                        if (currentPageUsers < totalPagesUsers) {
+                            currentPageUsers++;
+                            renderUsersTable(data, currentPageUsers);
+                            updateCurrentPage('users', currentPageUsers);
+                        }
                     });
                 })
-                .catch(error => console.error('Error fetching data:', error));
+                .catch(error => console.error('Error fetching users data:', error));
 
+            function renderUsersTable(data, page) {
+                const tableBody = document.getElementById('table-users');
+                tableBody.innerHTML = ''; // Clear previous rows
+
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedData = data.slice(start, end);
+
+                paginatedData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td class="px-2 py-2 border-b">${item.id}</td>
+                <td class="px-2 py-2 border-b">${item.name}</td>
+                <td class="px-2 py-2 border-b">${item.email}</td>
+                <td class="px-2 py-2 border-b truncate">${item.password}</td>
+                <td class="px-2 py-2 border-b truncate">${item.address}</td>
+                <td class="px-2 py-2 border-b">${item.phone_number}</td>
+                <td class="px-2 py-2 border-b">${new Date(item.created_at).toLocaleString()}</td>
+                <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
+            `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Fetch products data and implement pagination
             fetch('https://techshop-backend-c7hy.onrender.com/api/getAllProducts')
                 .then(response => response.json())
                 .then(data => {
-                    const tableBody = document.getElementById('table-products');
-                    data.forEach(item => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class="px-2 py-2 border-b">${item.id}</td>
-                            <td class="px-2 py-2 border-b truncate">${item.name}</td>
-                            <td class="px-2 py-2 border-b">${item.price}</td>
-                            <td class="px-2 py-2 border-b">${item.discount}</td>
-                            <td class="px-2 py-2 border-b">${item.sold_quantity}</td>
-                            <td class="px-2 py-2 border-b">${item.stock_quantity}</td>
-                            <td class="px-2 py-2 border-b">${item.category_id}</td>
-                            <td class="px-2 py-2 border-b">${item.brand}</td>
-                            <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
-                            <td class="px-2 py-2 border-b">
-                                <button onclick="openModal(${item.id})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
-                            </td>
-                        `;
-                        tableBody.appendChild(row);
+                    const totalPagesProducts = Math.ceil(data.length / itemsPerPage);
+                    renderProductsTable(data, currentPageProducts);
+
+                    document.getElementById('prev-products').addEventListener('click', function () {
+                        if (currentPageProducts > 1) {
+                            currentPageProducts--;
+                            renderProductsTable(data, currentPageProducts);
+                            updateCurrentPage('products', currentPageProducts);
+                        }
+                    });
+
+                    document.getElementById('next-products').addEventListener('click', function () {
+                        if (currentPageProducts < totalPagesProducts) {
+                            currentPageProducts++;
+                            renderProductsTable(data, currentPageProducts);
+                            updateCurrentPage('products', currentPageProducts);
+                        }
                     });
                 })
-                .catch(error => console.error('Error fetching data:', error));
+                .catch(error => console.error('Error fetching products data:', error));
+
+            function renderProductsTable(data, page) {
+                const tableBody = document.getElementById('table-products');
+                tableBody.innerHTML = ''; // Clear previous rows
+
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedData = data.slice(start, end);
+
+                paginatedData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td class="px-2 py-2 border-b">${item.id}</td>
+                <td class="px-2 py-2 border-b truncate">${item.name}</td>
+                <td class="px-2 py-2 border-b">${item.price}</td>
+                <td class="px-2 py-2 border-b">${item.discount}</td>
+                <td class="px-2 py-2 border-b">${item.sold_quantity}</td>
+                <td class="px-2 py-2 border-b">${item.stock_quantity}</td>
+                <td class="px-2 py-2 border-b">${item.category_id}</td>
+                <td class="px-2 py-2 border-b">${item.brand}</td>
+                <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
+                <td class="px-2 py-2 border-b">
+                    <button onclick="openModal(${item.id})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                </td>
+            `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Function to update current page display
+            function updateCurrentPage(type, page) {
+                const currentPageElement = document.getElementById(`current-page-${type}`);
+                currentPageElement.textContent = `Page ${page}`;
+            }
         });
+
 
         function openModal(productId) {
             // Fetch product data and populate the form
