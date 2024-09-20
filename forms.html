@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tailwind Admin Template</title>
+    <title>Add product form</title>
     <meta name="author" content="Tao">
     <meta name="description" content="">
 
     <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="assets/css/output.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
 
@@ -42,11 +42,7 @@
 <body class="bg-gray-100 font-family-karla flex">
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
-            <button
-                class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button>
+            <a href="dashboard.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href="dashboard.html"
@@ -63,7 +59,7 @@
                 Forms
             </a>
         </nav>
-        
+
     </aside>
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
@@ -78,7 +74,8 @@
                 <button x-show="isOpen" @click="isOpen = false"
                     class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                    <a href="#" id="logout-btn-desktop" class="block px-4 py-2 account-link hover:text-white">Sign
+                        Out</a>
                 </div>
             </div>
         </header>
@@ -109,27 +106,12 @@
                     <i class="fas fa-align-left mr-3"></i>
                     Forms
                 </a>
-                <a href="calendar.html"
+                <a href="#" id="logout-btn-mobile"
                     class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-calendar mr-3"></i>
-                    Calendar
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-cogs mr-3"></i>
-                    Support
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-user mr-3"></i>
-                    My Account
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-sign-out-alt mr-3"></i>
                     Sign Out
                 </a>
             </nav>
-            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button> -->
         </header>
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
@@ -145,56 +127,73 @@
                             <form class="p-10 bg-white rounded shadow-xl add-product-form">
                                 <!-- Name -->
                                 <div>
-                                    <label class="block text-sm text-gray-600" for="name">Name</label>
-                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name"
+                                    <label class="block text-sm text-gray-600" for="edit_name">Name</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_name"
                                         name="name" type="text" required placeholder="Product Name" aria-label="Name">
                                 </div>
                                 <!-- Description -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="description">Description</label>
+                                    <label class="block text-sm text-gray-600"
+                                        for="edit_description">Description</label>
                                     <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded"
-                                        id="description" name="description" rows="4" required
+                                        id="edit_description" name="description" rows="4" required
                                         placeholder="Product Description" aria-label="Description"></textarea>
                                 </div>
                                 <!-- Price -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="price">Price</label>
-                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="price"
+                                    <label class="block text-sm text-gray-600" for="edit_price">Price</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_price"
                                         name="price" type="number" step="any" required placeholder="Product Price"
                                         aria-label="Price">
                                 </div>
+                                <!-- Discount -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="edit_discount">Discount</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_discount"
+                                        name="discount" type="number" step="any" required placeholder="Product Discount"
+                                        aria-label="Discount">
+                                </div>
                                 <!-- Stock Quantity -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="stock_quantity">Stock
+                                    <label class="block text-sm text-gray-600" for="edit_stock_quantity">Stock
                                         Quantity</label>
                                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
-                                        id="stock_quantity" name="stock_quantity" type="number" required
+                                        id="edit_stock_quantity" name="stock_quantity" type="number" required
                                         placeholder="Stock Quantity" aria-label="Stock Quantity">
                                 </div>
                                 <!-- Category ID -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="category_id">Category ID</label>
-                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="category_id"
-                                        name="category_id" type="number" required placeholder="Category ID"
-                                        aria-label="Category ID">
+                                    <label class="block text-sm text-gray-600" for="edit_category_id">Category</label>
+                                    <select class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
+                                        id="edit_category_id" name="category_id" required aria-label="Category">
+                                        <option value="" disabled selected>Select a category</option>
+                                    </select>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="mt-2">
+                                    <label class="block text-sm text-gray-600" for="edit_product_image">Upload
+                                        Image</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
+                                        id="edit_product_image" type="file" accept="image/*" aria-label="Upload Image">
                                 </div>
                                 <!-- Image URL -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="image_url">Image URL</label>
-                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="image_url"
-                                        name="image_url" type="text" required placeholder="Image URL"
-                                        aria-label="Image URL">
+                                    <label class="block text-sm text-gray-600" for="edit_image_url">Image URL</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
+                                        id="edit_image_url" name="image_url" type="text" required
+                                        placeholder="Image URL" aria-label="Image URL">
                                 </div>
                                 <!-- Brand -->
                                 <div class="mt-2">
-                                    <label class="block text-sm text-gray-600" for="brand">Brand</label>
-                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="brand"
+                                    <label class="block text-sm text-gray-600" for="edit_brand">Brand</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_brand"
                                         name="brand" type="text" required placeholder="Brand" aria-label="Brand">
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="mt-6">
                                     <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
-                                        type="submit">Submit</button>
+                                        type="submit">Add product</button>
                                 </div>
                             </form>
                         </div>
@@ -214,67 +213,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('.add-product-form');
-
-            form.addEventListener('submit', async function (event) {
-                event.preventDefault(); // Ngăn chặn form gửi mặc định
-
-                // Lấy dữ liệu từ form
-                const name = document.getElementById('name').value.trim();
-                const description = document.getElementById('description').value.trim();
-                const price = parseInt(document.getElementById('price').value.trim());
-                const stock_quantity = parseInt(document.getElementById('stock_quantity').value.trim(), 10);
-                const category_id = parseInt(document.getElementById('category_id').value.trim(), 10);
-                const image_url = document.getElementById('image_url').value.trim();
-                const brand = document.getElementById('brand').value.trim();
-
-                // Kiểm tra tính hợp lệ của giá
-                const pricePattern = /^\d+(\.\d{1,2})?$/;
-                if (!pricePattern.test(price)) {
-                    alert('Vui lòng nhập số tiền hợp lệ!');
-                    return;
-                }
-
-                // Tạo đối tượng dữ liệu để gửi
-                const productData = {
-                    name: name,
-                    description: description,
-                    price: parseInt(price),
-                    stock_quantity: parseInt(stock_quantity, 10),
-                    category_id: parseInt(category_id, 10),
-                    image_url: image_url,
-                    brand: brand,
-                };
-                try {
-                    // Gửi dữ liệu đến API
-                    const response = await fetch('https://techshop-backend-c7hy.onrender.com/api/createProduct', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(productData)
-                    });
-                    console.log(productData);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-
-                    // Xử lý phản hồi từ API
-                    const result = await response.json();
-                    alert('Thêm sản phẩm thành công!');
-                    form.reset(); // Đặt lại form sau khi thành công
-
-                } catch (error) {
-                    console.error('Error adding product:', error);
-                    alert('Có lỗi khi thêm dữ liệu. Vui lòng thử lại');
-                }
-            });
-        });
-    </script>
+    <script src="assets/js/logout.js"></script>
+    <script src="assets/js/form.js"></script>
 
 </body>
 

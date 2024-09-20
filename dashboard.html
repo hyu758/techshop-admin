@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tailwind Admin Template</title>
+  <title>Dashboard</title>
   <meta name="author" content="BonTao">
   <meta name="description" content="">
 
@@ -13,7 +13,7 @@
   <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="assets/css/output.css" rel="stylesheet">
 
   <style>
     @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
@@ -48,11 +48,7 @@
 <body class="bg-gray-100 font-family-karla flex">
   <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
     <div class="p-6">
-      <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
-      <button
-        class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-        <i class="fas fa-plus mr-3"></i> New Report
-      </button>
+      <a href="dashboard.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
     </div>
     <nav class="text-white text-base font-semibold pt-3">
       <a href="dashboard.html" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
@@ -80,10 +76,9 @@
           class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
           <img src="avatar-default.jpg">
         </button>
-        <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
         <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-          <a href="login.html" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
-        </div>
+          <a href="#" id="logout-btn-desktop" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+        </div>     
       </div>
     </header>
 
@@ -111,26 +106,11 @@
           <i class="fas fa-align-left mr-3"></i>
           Forms
         </a>
-        <a href="calendar.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-          <i class="fas fa-calendar mr-3"></i>
-          Calendar
-        </a>
-        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-          <i class="fas fa-cogs mr-3"></i>
-          Support
-        </a>
-        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-          <i class="fas fa-user mr-3"></i>
-          My Account
-        </a>
-        <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+        <a href="#" id="logout-btn-mobile" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
           <i class="fas fa-sign-out-alt mr-3"></i>
           Sign Out
-        </a>
+        </a>    
       </nav>
-      <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-            <i class="fas fa-plus mr-3"></i> New Report
-        </button> -->
     </header>
 
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
@@ -210,8 +190,8 @@
 
 
           <!--Chart-->
-          <div class="flex justify-center gap-4 mt-4">
-            <div class="w-1/2 bg-white shadow-lg rounded-lg p-4">
+          <div class="sm:flex block justify-center gap-4 mt-4">
+            <div class="sm:w-1/2 w-100 shadow-lg rounded-lg p-4">
               <div class="border-b pb-4 flex items-center">
                 <p class="text-lg font-semibold p-1">Customers with highest total spend</p>
                 <i class="fa fa-arrow-up text-green-600"></i>
@@ -222,7 +202,7 @@
             </div>
 
             <!-- Active Users -->
-            <div class="w-1/2 bg-white shadow-lg rounded-lg p-4">
+            <div class="sm:w-1/2 w-100 bg-white shadow-lg rounded-lg p-4">
               <div class="border-b pb-4 flex items-center">
                 <p class="text-lg font-semibold p-1">Customers with most purchases</p>
                 <i class="fa fa-arrow-up text-green-600"></i>
@@ -257,165 +237,6 @@
 
 
   <script>
-    var ctx = document.getElementById("chart-bars-1").getContext("2d");
-    document.addEventListener('DOMContentLoaded', function () {
-      // Fetch data from the API
-      fetch('https://techshop-backend-c7hy.onrender.com/api/getCustomers/2')
-        .then(response => response.json())
-        .then(data => {
-          let sortedData = data.data.sort((a, b) => b.value - a.value);
-          let labels = sortedData.map(order => order.userName);
-
-          let chartData = sortedData.map(order => order.value);
-          // Tạo biểu đồ với dữ liệu mới
-          new Chart(ctx, {
-            type: "bar",
-            data: {
-              labels: labels, // Gán labels là các userId
-              datasets: [{
-                label: "Total Amount",
-                tension: 0.4,
-                borderWidth: 0,
-                borderRadius: 4,
-                borderSkipped: false,
-                backgroundColor: "#fff",
-                data: chartData, // Gán data là total_amount
-                maxBarThickness: 6
-              }],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  display: false,
-                }
-              },
-              interaction: {
-                intersect: false,
-                mode: 'index',
-              },
-              scales: {
-                y: {
-                  grid: {
-                    drawBorder: false,
-                    display: false,
-                    drawOnChartArea: false,
-                    drawTicks: false,
-                  },
-                  ticks: {
-                    suggestedMin: 0,
-                    beginAtZero: true,
-                    padding: 15,
-                    font: {
-                      size: 14,
-                      family: "Open Sans",
-                      style: 'normal',
-                      lineHeight: 2
-                    },
-                    color: "#fff"
-                  },
-                },
-                x: {
-                  grid: {
-                    drawBorder: false,
-                    display: false,
-                    drawOnChartArea: false,
-                    drawTicks: false
-                  },
-                  ticks: {
-                    display: false
-                  },
-                },
-              },
-            },
-          });
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    });
-
-
-    var ctx2 = document.getElementById("chart-bars-2").getContext("2d");
-    document.addEventListener('DOMContentLoaded', function () {
-      // Fetch data from the API
-      fetch('https://techshop-backend-c7hy.onrender.com/api/getCustomers/1')
-        .then(response => response.json())
-        .then(data => {
-          let sortedData = data.data.sort((a, b) => b.value - a.value);
-          let labels = sortedData.map(order => order.userName);
-
-          let chartData = sortedData.map(order => order.value);
-
-          // Tạo biểu đồ với dữ liệu đã điều chỉnh
-          new Chart(ctx2, {
-            type: "bar",
-            data: {
-              labels: labels, // Gán labels là các userName
-              datasets: [{
-                label: "Total Amount / Order Count",
-                tension: 0.4,
-                borderWidth: 0,
-                borderRadius: 4,
-                borderSkipped: false,
-                backgroundColor: "#fff",
-                data: chartData, // Gán data là giá trị đã chi hoặc số lượng đơn hàng
-                maxBarThickness: 6
-              }],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  display: false,
-                }
-              },
-              interaction: {
-                intersect: false,
-                mode: 'index',
-              },
-              scales: {
-                y: {
-                  grid: {
-                    drawBorder: false,
-                    display: false,
-                    drawOnChartArea: false,
-                    drawTicks: false,
-                  },
-                  ticks: {
-                    suggestedMin: 0,
-                    beginAtZero: true,
-                    padding: 15,
-                    font: {
-                      size: 14,
-                      family: "Open Sans",
-                      style: 'normal',
-                      lineHeight: 2
-                    },
-                    color: "#fff"
-                  },
-                },
-                x: {
-                  grid: {
-                    drawBorder: false,
-                    display: false,
-                    drawOnChartArea: false,
-                    drawTicks: false
-                  },
-                  ticks: {
-                    display: false
-                  },
-                },
-              },
-            },
-          });
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    });
-
-
-  </script>
-  <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -428,53 +249,10 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      fetch('https://techshop-backend-c7hy.onrender.com/api/getAllUsers')
-        .then(response => response.json())
-        .then(data => {
-          // Tính tổng số người dùng
-          const userCount = data.length;
+  <script src="assets/js/dashboard.js"></script>
 
-          // Cập nhật số người dùng vào trang web
-          const userCountElement = document.getElementById('user-count');
-          if (userCountElement) {
-            userCountElement.textContent = userCount.toLocaleString();
-          }
-        })
-        .catch(error => console.error('Error fetching data:', error));
-
-      fetch('https://techshop-backend-c7hy.onrender.com/api/getAllProducts')
-        .then(response => response.json())
-        .then(data => {
-          const totalStockQuantity = data.reduce((total, product) => total + product.stock_quantity, 0);
-          const totalSoldQuantity = data.reduce((total, product) => total + product.sold_quantity, 0);
-          const totalRevenue = data.reduce((total, product) => total + (product.price * product.sold_quantity), 0);
-
-          // Cập nhật số lượng sản phẩm vào trang web
-          const productCount = document.getElementById('total-stock-quantity');
-          if (productCount) {
-            productCount.textContent = totalStockQuantity.toLocaleString();
-          }
-
-          // Cập nhật doanh thu vào trang web
-          const revenueElement = document.getElementById('total-revenue');
-          if (revenueElement) {
-            revenueElement.textContent = totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-          }
-
-          // Cập nhật số sản phẩm đã bán vào trang web
-          const soldQuantityElement = document.getElementById('total-sold-quantity');
-          if (soldQuantityElement) {
-            soldQuantityElement.textContent = totalSoldQuantity.toLocaleString();
-          }
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    });
-  </script>
-
+  <script src="assets/js/logout.js"></script>
 
 
 </body>
-
 </html>

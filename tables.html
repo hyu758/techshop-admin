@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tailwind Admin Template</title>
+    <title>Tables</title>
     <meta name="author" content="Tao">
     <meta name="description" content="">
 
@@ -75,11 +75,7 @@
 <body class="bg-gray-100 font-family-karla flex">
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="index.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
-            <button
-                class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button>
+            <a href="dashboard.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href="dashboard.html"
@@ -110,7 +106,8 @@
                 <button x-show="isOpen" @click="isOpen = false"
                     class="h-full w-full fixed inset-0 cursor-default"></button>
                 <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                    <a href="#" id="logout-btn-desktop" class="block px-4 py-2 account-link hover:text-white">Sign
+                        Out</a>
                 </div>
             </div>
         </header>
@@ -141,27 +138,11 @@
                     <i class="fas fa-align-left mr-3"></i>
                     Forms
                 </a>
-                <a href="calendar.html"
-                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-calendar mr-3"></i>
-                    Calendar
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-cogs mr-3"></i>
-                    Support
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-user mr-3"></i>
-                    My Account
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <a href="#" id="logout-btn-mobile" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-sign-out-alt mr-3"></i>
                     Sign Out
-                </a>
+                  </a>    
             </nav>
-            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                <i class="fas fa-plus mr-3"></i> New Report
-            </button> -->
         </header>
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
@@ -231,6 +212,39 @@
                         <button id="next-products" class="bg-gray-500 text-white px-4 py-2 rounded">Next</button>
                     </div>
                 </div>
+
+                <div class="w-full mt-6">
+                    <p class="text-xl pb-3 flex items-center">
+                        <i class="fas fa-list mr-3"></i> Orders
+                    </p>
+                    <div class="bg-white overflow-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-800 text-white">
+                                <tr>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">ID</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">User ID</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Total Amount</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Status</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Created At</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Updated At</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Phone</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Customer Name</th>
+                                    <th class="text-left py-3 px-2 uppercase font-semibold text-sm">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-orders" class="text-gray-700">
+                                <!-- Rows will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination buttons for Orders table -->
+                    <div class="flex justify-center items-center space-x-4 mt-4">
+                        <button id="prev-orders" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+                        <span id="current-page-orders" class="text-lg font-medium text-gray-700">Page 1</span>
+                        <button id="next-orders" class="bg-gray-500 text-white px-4 py-2 rounded">Next</button>
+                    </div>
+                </div>
+                
             </main>
 
             <footer class="w-full bg-white text-right p-4">
@@ -247,8 +261,7 @@
                 <button id="close-modal" class="text-gray-600 hover:text-gray-800" aria-label="Close modal">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
@@ -256,7 +269,7 @@
             <form id="edit-form">
                 <!-- Name -->
                 <div>
-                    <label class="block text-sm text-gray-600" for="non_edit_id">ID</label>
+                    <label class="block text-sm text-gray-600" for="readonly-input">ID</label>
                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="readonly-input" name="id"
                         type="text" readonly aria-label="ID">
                 </div>
@@ -284,13 +297,6 @@
                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_discount" name="discount"
                         type="number" step="any" required placeholder="Product Discount" aria-label="Discount">
                 </div>
-                <!-- Sold Quantity -->
-                <div class="mt-2">
-                    <label class="block text-sm text-gray-600" for="edit_sold_quantity">Sold Quantity</label>
-                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_sold_quantity"
-                        name="sold_quantity" type="number" required placeholder="Sold Quantity"
-                        aria-label="Sold Quantity">
-                </div>
                 <!-- Stock Quantity -->
                 <div class="mt-2">
                     <label class="block text-sm text-gray-600" for="edit_stock_quantity">Stock Quantity</label>
@@ -298,11 +304,11 @@
                         name="stock_quantity" type="number" required placeholder="Stock Quantity"
                         aria-label="Stock Quantity">
                 </div>
-                <!-- Category ID -->
+                <!-- Image Upload -->
                 <div class="mt-2">
-                    <label class="block text-sm text-gray-600" for="edit_category_id">Category ID</label>
-                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_category_id"
-                        name="category_id" type="number" required placeholder="Category ID" aria-label="Category ID">
+                    <label class="block text-sm text-gray-600" for="edit_product_image">Upload Image</label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="edit_product_image"
+                        type="file" accept="image/*" aria-label="Upload Image">
                 </div>
                 <!-- Image URL -->
                 <div class="mt-2">
@@ -324,179 +330,15 @@
             </form>
         </div>
     </div>
+    
 
     <!-- AlpineJS -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const itemsPerPage = 10;
-            let currentPageUsers = 1;
-            let currentPageProducts = 1;
-
-            // Fetch users data and implement pagination
-            fetch('https://techshop-backend-c7hy.onrender.com/api/getAllUsers')
-                .then(response => response.json())
-                .then(data => {
-                    const totalPagesUsers = Math.ceil(data.length / itemsPerPage);
-                    renderUsersTable(data, currentPageUsers);
-
-                    document.getElementById('prev-users').addEventListener('click', function () {
-                        if (currentPageUsers > 1) {
-                            currentPageUsers--;
-                            renderUsersTable(data, currentPageUsers);
-                            updateCurrentPage('users', currentPageUsers);
-                        }
-                    });
-
-                    document.getElementById('next-users').addEventListener('click', function () {
-                        if (currentPageUsers < totalPagesUsers) {
-                            currentPageUsers++;
-                            renderUsersTable(data, currentPageUsers);
-                            updateCurrentPage('users', currentPageUsers);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching users data:', error));
-
-            function renderUsersTable(data, page) {
-                const tableBody = document.getElementById('table-users');
-                tableBody.innerHTML = ''; // Clear previous rows
-
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const paginatedData = data.slice(start, end);
-
-                paginatedData.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                <td class="px-2 py-2 border-b">${item.id}</td>
-                <td class="px-2 py-2 border-b">${item.name}</td>
-                <td class="px-2 py-2 border-b">${item.email}</td>
-                <td class="px-2 py-2 border-b truncate">${item.password}</td>
-                <td class="px-2 py-2 border-b truncate">${item.address}</td>
-                <td class="px-2 py-2 border-b">${item.phone_number}</td>
-                <td class="px-2 py-2 border-b">${new Date(item.created_at).toLocaleString()}</td>
-                <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
-            `;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            // Fetch products data and implement pagination
-            fetch('https://techshop-backend-c7hy.onrender.com/api/getAllProducts')
-                .then(response => response.json())
-                .then(data => {
-                    const totalPagesProducts = Math.ceil(data.length / itemsPerPage);
-                    renderProductsTable(data, currentPageProducts);
-
-                    document.getElementById('prev-products').addEventListener('click', function () {
-                        if (currentPageProducts > 1) {
-                            currentPageProducts--;
-                            renderProductsTable(data, currentPageProducts);
-                            updateCurrentPage('products', currentPageProducts);
-                        }
-                    });
-
-                    document.getElementById('next-products').addEventListener('click', function () {
-                        if (currentPageProducts < totalPagesProducts) {
-                            currentPageProducts++;
-                            renderProductsTable(data, currentPageProducts);
-                            updateCurrentPage('products', currentPageProducts);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching products data:', error));
-
-            function renderProductsTable(data, page) {
-                const tableBody = document.getElementById('table-products');
-                tableBody.innerHTML = ''; // Clear previous rows
-
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const paginatedData = data.slice(start, end);
-
-                paginatedData.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                <td class="px-2 py-2 border-b">${item.id}</td>
-                <td class="px-2 py-2 border-b truncate">${item.name}</td>
-                <td class="px-2 py-2 border-b">${item.price}</td>
-                <td class="px-2 py-2 border-b">${item.discount}</td>
-                <td class="px-2 py-2 border-b">${item.sold_quantity}</td>
-                <td class="px-2 py-2 border-b">${item.stock_quantity}</td>
-                <td class="px-2 py-2 border-b">${item.category_id}</td>
-                <td class="px-2 py-2 border-b">${item.brand}</td>
-                <td class="px-2 py-2 border-b">${new Date(item.updated_at).toLocaleString()}</td>
-                <td class="px-2 py-2 border-b">
-                    <button onclick="openModal(${item.id})" class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
-                </td>
-            `;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            // Function to update current page display
-            function updateCurrentPage(type, page) {
-                const currentPageElement = document.getElementById(`current-page-${type}`);
-                currentPageElement.textContent = `Page ${page}`;
-            }
-        });
-
-
-        function openModal(productId) {
-            // Fetch product data and populate the form
-            fetch(`https://techshop-backend-c7hy.onrender.com/api/getProductDetails/${productId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('readonly-input').value = productId;
-                    document.getElementById('edit_name').value = data.name;
-                    document.getElementById('edit_price').value = data.price;
-                    document.getElementById('edit_discount').value = data.discount;
-                    document.getElementById('edit_description').value = data.description;
-                    document.getElementById('edit_sold_quantity').value = data.sold_quantity;
-                    document.getElementById('edit_stock_quantity').value = data.stock_quantity;
-                    document.getElementById('edit_category_id').value = data.category_id;
-                    document.getElementById('edit_brand').value = data.brand;
-                    document.getElementById('edit_image_url').value = data.image_url;
-
-                    // Show the modal
-                    console.log('ALooooo')
-                    document.getElementById('edit-modal').classList.add('modal-show');
-                })
-                .catch(error => console.error('Error fetching product data:', error));
-        }
-
-        document.getElementById('close-modal').addEventListener('click', function () {
-            document.getElementById('edit-modal').classList.remove('modal-show');
-        });
-
-        document.getElementById('edit-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const productData = {};
-
-            formData.forEach((value, key) => {
-                productData[key] = value;
-            });
-            console.log(productData.id);
-            fetch(`https://techshop-backend-c7hy.onrender.com/api/updateProduct/${productData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(productData),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Product updated successfully');
-                })
-                .catch(error => console.error('Error updating product:', error));
-        });
-    </script>
+    <script src="assets/js/logout.js"></script>
+    <script src="assets/js/table.js"> </script>
 </body>
 
 </html>

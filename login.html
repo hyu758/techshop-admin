@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="assets/css/output.css" rel="stylesheet">
     <style>
         .bg-custom {
             background-color: #f0f4f8;
@@ -31,36 +31,7 @@
             <p id="error-message" class="mt-4 text-red-500 text-center hidden">Invalid username or password</p>
         </form>
     </div>
-
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            fetch('users.txt')
-                .then(response => response.text())
-                .then(text => {
-                    // Split the text into lines, removing carriage returns and trimming whitespace
-                    const lines = text.trim().split(/\r?\n/);
-                    // Convert lines into an array of [username, password] pairs
-                    const users = lines.map(line => line.split(':').map(part => part.trim()));
-
-                    // Find the user with matching username and password
-                    const user = users.find(([user, pass]) => user === username && pass === password);
-
-                    if (user) {
-                        alert('Login successful');
-                        window.location.href = 'dashboard.html';
-                    } else {
-                        document.getElementById('error-message').classList.remove('hidden');
-                    }
-                })
-                .catch(error => console.error('Error fetching user data:', error));
-        });
-
-    </script>
+    <script src="assets/js/login.js"></script>
 </body>
 
 </html>
