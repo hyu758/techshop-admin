@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td class="px-2 py-2 border-b">
                     <button class="bg-blue-500 text-white px-2 py-1 rounded edit-button" data-id="${item.id}">Edit</button>
                 </td>
+                <td class="px-2 py-2 border-b">
+                    <button class= "text-white px-2 py-1 rounded delete-button" style = "background-color: #dc2626" data-id="${item.id}">Delete</button>
+                </td>
             `;
             tableBody.appendChild(row);
         });
@@ -256,6 +259,55 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error uploading image:', error);
                 alert('Error uploading image');
             }
+        }
+    });
+
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('delete-button')) {
+            // Lấy ID sản phẩm từ data attribute
+            const productId = event.target.getAttribute('data-id');
+            console.log('Product ID:', productId); // Thêm console.log để kiểm tra ID sản phẩm
+
+            // Hiển thị thông báo xác nhận bằng Swal.fire
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Nếu người dùng xác nhận, gọi API để xoá sản phẩm
+                    console.log('Confirmed delete'); // Thêm console.log để debug
+                    fetch(`https://techshop-backend-c7hy.onrender.com/api/deleteProductById/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your product has been deleted.',
+                                'success'
+                            );
+                            // Cập nhật giao diện hoặc tải lại trang sau khi xoá
+                            setTimeout(() => {
+                                location.reload(); // Tải lại trang sau khi xoá thành công
+                            }, 1500);
+                        } else {
+                            throw new Error('Failed to delete product');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting product:', error);
+                        Swal.fire('Error', 'There was an issue deleting the product.', 'error');
+                    });
+                }
+            });
         }
     });
 });
