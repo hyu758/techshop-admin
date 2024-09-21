@@ -1,3 +1,0 @@
-admin1:123
-admin2:456
-admin3:789

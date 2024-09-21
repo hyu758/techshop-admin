@@ -22,8 +22,8 @@ document.getElementById('login-form').addEventListener('submit', function (event
         }
     })
     .then(data => {
-        const token = data.token; // Thay thế 'token' bằng tên biến đúng nếu khác
-        const user = data.user; // Thay thế 'user' bằng tên biến đúng nếu khác
+        const token = data.token;
+        const user = data.user;
 
         // Lưu token và thông tin người dùng vào sessionStorage
         sessionStorage.setItem('userToken', token);
