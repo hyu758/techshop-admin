@@ -1,11 +1,11 @@
 window.onload = function () {
-    const userToken = localStorage.getItem('userToken');
+    const userToken = sessionStorage.getItem('userToken');
     if (!userToken) {
         alert('Bạn cần đăng nhập!')
         // Nếu không có token, chuyển hướng về trang login
         window.location.href = 'login.html';
     }
-};
+  };
 document.addEventListener('DOMContentLoaded', function () {
     const itemsPerPage = 10;
     let currentPageUsers = 1;

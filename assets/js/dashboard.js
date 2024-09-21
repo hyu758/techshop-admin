@@ -1,5 +1,5 @@
 window.onload = function () {
-  const userToken = localStorage.getItem('userToken');
+  const userToken = sessionStorage.getItem('userToken');
   if (!userToken) {
       alert('Bạn cần đăng nhập!')
       // Nếu không có token, chuyển hướng về trang login
