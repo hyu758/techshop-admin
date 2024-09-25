@@ -8,6 +8,7 @@ window.onload = function () {
   };
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.add-product-form');
+    const categoryForm = document.querySelector('.add-category-form')
     const imageInput = document.getElementById('edit_product_image');
     const imageUrlInput = document.getElementById('edit_image_url');
     loadCategories();
@@ -112,6 +113,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             console.error('Lỗi khi thêm sản phẩm:', error);
+            alert('Có lỗi khi thêm dữ liệu. Vui lòng thử lại');
+        }
+    });
+
+    categoryForm.addEventListener('submit', async function (event) {
+        event.preventDefault(); // Ngăn chặn form gửi mặc định
+    
+        // Lấy dữ liệu từ form
+        const categoryName = document.getElementById('category_name').value.trim();
+        const categoryDesc = document.getElementById('category_desc').value.trim();
+    
+        // Kiểm tra tính hợp lệ của tên danh mục
+        if (categoryName === '') {
+            alert('Vui lòng nhập tên danh mục!');
+            return;
+        }
+    
+        // Tạo đối tượng dữ liệu để gửi
+        const categoryData = {
+            name: categoryName,
+            description: categoryDesc,
+        };
+    
+        try {
+            // Gửi dữ liệu đến API
+            const response = await fetch('https://techshop-backend-c7hy.onrender.com/api/addCategory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(categoryData)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            // Xử lý phản hồi từ API
+            await response.json();
+            alert('Thêm danh mục thành công!');
+            categoryForm.reset(); // Đặt lại form sau khi thành công
+    
+        } catch (error) {
+            console.error('Lỗi khi thêm danh mục:', error);
             alert('Có lỗi khi thêm dữ liệu. Vui lòng thử lại');
         }
     });
